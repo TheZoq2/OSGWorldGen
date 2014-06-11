@@ -73,7 +73,7 @@ void Branch::generate(float length, unsigned int segments, float startRadius, fl
 			int vert2 = (i + 1) * ringAmount + n; //0 + i
 			int vert3 = (i + 1) * ringAmount + n - 1;
 
-			if(vert3 < vertecies->size())
+			if((unsigned int)vert3 < vertecies->size())
 			{
 				osg::DrawElementsUInt* face = new osg::DrawElementsUInt(osg::PrimitiveSet::TRIANGLES, 0);
 
@@ -113,18 +113,12 @@ void Branch::generate(float length, unsigned int segments, float startRadius, fl
 	quat = new osg::Quat;
 	rootTransform = new osg::PositionAttitudeTransform;
 	rootTransform->addChild(geode);
+
+	//Calculating normals
+	osgUtil::SmoothingVisitor sv;
+	rootTransform->accept(sv);
 }
 
-/*void Branch::setAngle(float angleX, float angleY, float angleZ)
-{
-	this->angleX = angleX;
-	this->angleY = angleY;
-	this->angleZ = angleZ;
-
-	quat->makeRotate(angleX, 1.0, 0.0, 0.0);
-
-	rootTransform->setAttitude(*quat);
-}*/
 void Branch::setRotation(osg::Quat rotation)
 {
 	this->rotation = rotation;
@@ -181,26 +175,40 @@ osg::Vec3 Branch::getCenter(float y)
 void Branch::addLeaves(float density, float width, float height, float cX, float cZ, float start, float end)
 {
 	float startPoint = length * start;
-	float endPoint = length * end;
+	float endPoint =  length * end;
 
 	unsigned int leafAmount = ceil((endPoint - startPoint) * density);
 
-	float leafY = startPoint + endPoint * Generator::rand1d(length, seed);
+	float leafY = endPoint * Generator::rand1d(length, seed) - startPoint;
 	for(unsigned int i = 0; i < leafAmount; i++)
 	{
 		Leaf leaf;
 		leaf.create(width, height, cX, cZ);
 
 		//Calculating the position of the leaf
-		leafY = startPoint + Generator::rand1d(leafY, seed) * endPoint;
+		leafY = Generator::rand1d(leafY, seed) * endPoint + startPoint;
 
 		//Actual position
 		osg::Vec3 pos = getCenter(leafY);
+
+		//Randomising the position of the leaf
+		pos.set(
+					pos.x() + Generator::rand1d(leafY, seed) * 1.5,
+					pos.y(),
+					pos.z() + Generator::rand1d(leafY, seed) * 1.5
+				);
 
 		leaf.setPosition(pos.x(), pos.y(), pos.z());
 
 		leaves.push_back(leaf);
 
 		rootTransform->addChild(leaf.getRoot());
+	}
+}
+void Branch::setLeafStateSet(osg::StateSet* stateSet)
+{
+	for(unsigned int i = 0; i < leaves.size(); i++)
+	{
+		leaves.at(i).setStateSet(stateSet);
 	}
 }

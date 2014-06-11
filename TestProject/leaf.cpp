@@ -6,6 +6,7 @@ Leaf::Leaf()
 
 void Leaf::create(float width, float height, float centerX, float centerZ)
 {
+	textureCoords = new osg::Vec2Array;
 	//Setup the base class
 	setupObject();
 
@@ -21,8 +22,8 @@ void Leaf::create(float width, float height, float centerX, float centerZ)
 	billboard->setMode(osg::Billboard::POINT_ROT_EYE);
 
 	//Calculating the corner positions
-	float x1 = centerX - width;
-	float z1 = centerZ - height;
+	float x1 = - centerX;
+	float z1 = - centerZ;
 	float x2 = width - centerX;
 	float z2 = height - centerZ;
 
@@ -49,6 +50,19 @@ void Leaf::create(float width, float height, float centerX, float centerZ)
 
 	geometry->addPrimitiveSet(face2);
 
+	//Calculating texture coords
+	textureCoords->push_back(osg::Vec2(0, 0));
+	textureCoords->push_back(osg::Vec2(0, 1));
+	textureCoords->push_back(osg::Vec2(1, 0));
+	textureCoords->push_back(osg::Vec2(1, 1));
+
+	geometry->setTexCoordArray(0, textureCoords);
+
 	//Adding the billboard to the root of the object class
 	root->addChild(billboard);
+}
+
+void Leaf::setStateSet(osg::StateSet *stateSet)
+{
+	root->setStateSet(stateSet);
 }

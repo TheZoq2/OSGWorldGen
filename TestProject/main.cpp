@@ -22,7 +22,8 @@ int main()
 	//TerrainChunk chunk;
 	//chunk.create(0, 0, 128, 128);
 	Tree tree;
-	tree.generateFir(16, 10, 1.25215);
+	tree.generateFir(24, 10, 1.25215, 30, 0.4);
+	tree.setLeafTexture("../media/img/Barr.png");
 
 	//Creating a root object
 	osg::Group* root = new osg::Group();

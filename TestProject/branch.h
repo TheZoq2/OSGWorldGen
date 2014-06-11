@@ -12,6 +12,8 @@
 #include<osg/Quat>
 #include<osg/PositionAttitudeTransform>
 
+#include<osgUtil/SmoothingVisitor>
+
 #include "Generator.h"
 #include "leaf.h"
 
@@ -34,7 +36,8 @@ public:
 	osg::PositionAttitudeTransform* getRoot();
 	osg::Vec3 getCenter(float y);
 
-	void addLeaves(float leafAmount, float width, float height, float cX, float cZ, float start, float end);
+	void addLeaves(float density, float width, float height, float cX, float cZ, float start, float end);
+	void setLeafStateSet(osg::StateSet* stateSet);
 private:
 	osg::Quat* quat;
 	osg::PositionAttitudeTransform* rootTransform;
