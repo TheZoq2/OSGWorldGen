@@ -1,11 +1,15 @@
 #include "branch.h"
 
+int branchAmount = 0;
+
 Branch::Branch()
 {
 }
 
 void Branch::generate(float length, unsigned int segments, float startRadius, float endRadius, float radiusDiff, unsigned int ringAmount, float minBendX, float maxBendX, float minBendZ, float maxBendZ, float seed)
 {
+	branchAmount++;
+
 	this->seed = seed;
 
 	this->length = length;
@@ -186,23 +190,26 @@ void Branch::addLeaves(float density, float width, float height, float cX, float
 		leaf.create(width, height, cX, cZ);
 
 		//Calculating the position of the leaf
-		leafY = Generator::rand1d(leafY, seed) * endPoint + startPoint;
+		leafY = Generator::rand1d(leafY, seed) * (endPoint - startPoint) + startPoint;
 
 		//Actual position
 		osg::Vec3 pos = getCenter(leafY);
 
 		//Randomising the position of the leaf
 		pos.set(
-					pos.x() + Generator::rand1d(leafY, seed) * 1.5,
+					pos.x() + Generator::rand1d(leafY, seed) * 1.5 - 0.75,
 					pos.y(),
-					pos.z() + Generator::rand1d(leafY, seed) * 1.5
+					pos.z() + Generator::rand1d(leafY, seed) * 1.5 - 0.75
 				);
 
-		leaf.setPosition(pos.x(), pos.y(), pos.z());
+		if(pos.y() == leafY)
+		{
+			leaf.setPosition(pos.x(), pos.y(), pos.z());
 
-		leaves.push_back(leaf);
+			leaves.push_back(leaf);
 
-		rootTransform->addChild(leaf.getRoot());
+			rootTransform->addChild(leaf.getRoot());
+		}
 	}
 }
 void Branch::setLeafStateSet(osg::StateSet* stateSet)

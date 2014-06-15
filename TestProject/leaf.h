@@ -6,6 +6,8 @@
 #include<osg/Billboard>
 #include<osg/Geometry>
 
+extern int leafAmount;
+
 class Leaf : public Object
 {
 public:

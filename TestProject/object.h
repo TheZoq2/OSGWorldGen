@@ -13,14 +13,20 @@ public:
 	void setPosition(float x, float y, float z);
 
 	osg::PositionAttitudeTransform* getRoot();
+
+	float getX();
+	float getY();
+	float getZ();
 protected:
 	void setupObject();
 
 	osg::PositionAttitudeTransform* root;
-private:
+
 	float x;
 	float y;
 	float z;
+private:
+
 };
 
 #endif // PLANT_H

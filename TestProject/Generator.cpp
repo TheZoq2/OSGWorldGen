@@ -7,35 +7,13 @@ float Generator::rand1d(float x, float seed)
 }
 float Generator::rand2d(float x, float y, float seed)
 {
-	float randVal = sin(x*12.9898 + y*78.233) * seed;
+	float randVal = sin(x*12.9898 + y*62.423) * seed;
 	return randVal - floor(randVal); //Making 0 < randVal < 1
 }
 
-/*float Generator::getPointHeight(float x, float z, float detailLevel)
+float Generator::getPointHeight(float x, float z, float detailLevel, float seed)
 {
-	//float points[4];//The 4 reference points
-
-	//Calculating what point to get the height from
-	float xPoint = floor(x / detailLevel);
-	float zPoint = floor(z / detailLevel);
-
-	//Calculating heights
-	float xValue1 = cos((x - xPoint) / detailLevel * M_PI);
-	float xValue2 = 1 - xValue1;
-	float zValue1 = cos((z - zPoint) / detailLevel * M_PI);
-	float zValue2 = 1 - zValue1;
-
-	float finalXValue1 = xValue1 * zValue1;
-	float finalXValue2 = xValue2 * zValue2;
-
-	float height = Generator::rand2d(xPoint, zPoint, 21236) * finalXValue1 + Generator::rand2d(xPoint + detailLevel, zPoint, 21236) * finalXValue2;
-
-	return height;
-}*/
-
-float Generator::getPointHeight(float x, float z, float detailLevel)
-{
-	float seed = 61236.24;
+	//seed = 61236.24;
 
 	float height = 0;
 
@@ -97,4 +75,24 @@ float Generator::interpolateCos(float x1, float x2, float dist)
 	//result = x2 * dist + x1 * (1 - dist);
 
 	return result;
+}
+
+float Generator::getTerrainHeight(float x, float y, float seed)
+{
+	float heightSum = (75+25+12+7+3+2+1);
+
+	float pointHeight = Generator::getPointHeight(x, y, 256, seed) * 75;
+	pointHeight = pointHeight + Generator::getPointHeight(x, y, 64, seed) * 25;
+	pointHeight = pointHeight + Generator::getPointHeight(x, y, 32, seed) * 12;
+	pointHeight = pointHeight + Generator::getPointHeight(x, y, 20, seed) * 7;
+	pointHeight = pointHeight + Generator::getPointHeight(x, y, 16, seed) * 3;
+	pointHeight = pointHeight + Generator::getPointHeight(x, y, 8, seed) * 2;
+	//pointHeight = pointHeight + Generator::getPointHeight(x + xVert, z + zVert, 4) * 1;
+
+	//Smoothing terrain below
+	float pointFact = pointHeight / (heightSum * 1.2);
+
+	pointHeight = pointHeight * pointFact;
+
+	return pointHeight;
 }

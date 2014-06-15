@@ -10,7 +10,9 @@ SOURCES += main.cpp \
     object.cpp \
     tree.cpp \
     branch.cpp \
-    leaf.cpp
+    leaf.cpp \
+    terrainchunk.cpp \
+    lodobject.cpp
 
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../Build/osg3-2/lib/release/ -losg
@@ -34,7 +36,9 @@ HEADERS += \
     object.h \
     tree.h \
     branch.h \
-    leaf.h
+    leaf.h \
+    terrainchunk.h \
+    lodobject.h
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../Build/osg3-2/lib/release/ -losgDB
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../Build/osg3-2/lib/debug/ -losgDB

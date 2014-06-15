@@ -52,7 +52,9 @@ SOURCES       = ../TestProject/main.cpp \
 		../TestProject/object.cpp \
 		../TestProject/tree.cpp \
 		../TestProject/branch.cpp \
-		../TestProject/leaf.cpp 
+		../TestProject/leaf.cpp \
+		../TestProject/terrainchunk.cpp \
+		../TestProject/lodobject.cpp 
 OBJECTS       = main.o \
 		Generator.o \
 		Terrain.o \
@@ -60,7 +62,9 @@ OBJECTS       = main.o \
 		object.o \
 		tree.o \
 		branch.o \
-		leaf.o
+		leaf.o \
+		terrainchunk.o \
+		lodobject.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/shell-unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -472,12 +476,17 @@ main.o: ../TestProject/main.cpp ../../Source/osg3-2/include/osg/Geode \
 		../../Source/osg3-2/include/osgDB/OutputStream \
 		../../Source/osg3-2/include/osgDB/ImageProcessor \
 		../../Source/osg3-2/include/osgDB/FileUtils \
-		../../Source/osg3-2/include/osgUtil/SmoothingVisitor \
-		../TestProject/branch.h \
-		../../Source/osg3-2/include/osg/PolygonMode \
+		../TestProject/terrainchunk.h \
 		../TestProject/tree.h \
 		../TestProject/object.h \
-		../TestProject/leaf.h
+		../../Source/osg3-2/include/osg/Texture2D \
+		../../Source/osg3-2/include/osg/BlendFunc \
+		../../Source/osg3-2/include/osgDB/ReadFile \
+		../TestProject/branch.h \
+		../../Source/osg3-2/include/osg/PolygonMode \
+		../../Source/osg3-2/include/osgUtil/SmoothingVisitor \
+		../TestProject/leaf.h \
+		../TestProject/lodobject.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../TestProject/main.cpp
 
 Generator.o: ../TestProject/Generator.cpp ../TestProject/Generator.h
@@ -612,11 +621,21 @@ Terrain.o: ../TestProject/Terrain.cpp ../TestProject/Terrain.h \
 		../../Source/osg3-2/include/osg/Geode \
 		../../Source/osg3-2/include/osgDB/ImageProcessor \
 		../../Source/osg3-2/include/osgDB/FileUtils \
+		../TestProject/terrainchunk.h \
+		../TestProject/tree.h \
+		../TestProject/object.h \
 		../../Source/osg3-2/include/osg/PositionAttitudeTransform \
 		../../Source/osg3-2/include/osg/AnimationPath \
+		../../Source/osg3-2/include/osg/Texture2D \
+		../../Source/osg3-2/include/osg/BlendFunc \
+		../../Source/osg3-2/include/osgDB/ReadFile \
+		../TestProject/branch.h \
+		../../Source/osg3-2/include/osg/PolygonMode \
 		../../Source/osg3-2/include/osgUtil/SmoothingVisitor \
 		../../Source/osg3-2/include/osgUtil/Export \
-		../../Source/osg3-2/include/osg/PolygonMode
+		../TestProject/leaf.h \
+		../../Source/osg3-2/include/osg/Billboard \
+		../TestProject/lodobject.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Terrain.o ../TestProject/Terrain.cpp
 
 ShaderObject.o: ../TestProject/ShaderObject.cpp ../TestProject/ShaderObject.h \
@@ -951,9 +970,44 @@ tree.o: ../TestProject/tree.cpp ../TestProject/tree.h \
 		../../Source/osg3-2/include/osg/Geode \
 		../../Source/osg3-2/include/osg/PositionAttitudeTransform \
 		../../Source/osg3-2/include/osg/AnimationPath \
+		../../Source/osg3-2/include/osg/Texture2D \
+		../../Source/osg3-2/include/osg/BlendFunc \
+		../../Source/osg3-2/include/osgDB/ReadFile \
+		../../Source/osg3-2/include/osg/ArgumentParser \
+		../../Source/osg3-2/include/osg/ApplicationUsage \
+		../../Source/osg3-2/include/osgDB/Export \
+		../../Source/osg3-2/include/osgDB/Registry \
+		../../Source/osg3-2/include/OpenThreads/ReentrantMutex \
+		../../Source/osg3-2/include/osg/KdTree \
+		../../Source/osg3-2/include/osgDB/DynamicLibrary \
+		../../Source/osg3-2/include/osgDB/ReaderWriter \
+		../../Source/osg3-2/include/osgDB/AuthenticationMap \
+		../../Source/osg3-2/include/osgDB/Options \
+		../../Source/osg3-2/include/osgDB/Callbacks \
+		../../Source/osg3-2/include/osgDB/FileCache \
+		../../Source/osg3-2/include/osgDB/DatabaseRevisions \
+		../../Source/osg3-2/include/osg/ObserverNodePath \
+		../../Source/osg3-2/include/osgDB/DotOsgWrapper \
+		../../Source/osg3-2/include/osgDB/Input \
+		../../Source/osg3-2/include/osgDB/Output \
+		../../Source/osg3-2/include/osgDB/fstream \
+		../../Source/osg3-2/include/osgDB/ObjectWrapper \
+		../../Source/osg3-2/include/osgDB/Serializer \
+		../../Source/osg3-2/include/osgDB/InputStream \
+		../../Source/osg3-2/include/osg/Endian \
+		../../Source/osg3-2/include/osgDB/StreamOperator \
+		../../Source/osg3-2/include/osgDB/DataTypes \
+		../../Source/osg3-2/include/osgDB/OutputStream \
+		../../Source/osg3-2/include/osgDB/SharedStateManager \
+		../../Source/osg3-2/include/osgDB/ImageProcessor \
 		../TestProject/branch.h \
 		../../Source/osg3-2/include/osg/PolygonMode \
-		../TestProject/Generator.h
+		../../Source/osg3-2/include/osgUtil/SmoothingVisitor \
+		../../Source/osg3-2/include/osgUtil/Export \
+		../TestProject/Generator.h \
+		../TestProject/leaf.h \
+		../../Source/osg3-2/include/osg/Billboard \
+		../TestProject/lodobject.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o tree.o ../TestProject/tree.cpp
 
 branch.o: ../TestProject/branch.cpp ../TestProject/branch.h \
@@ -1057,7 +1111,12 @@ branch.o: ../TestProject/branch.cpp ../TestProject/branch.h \
 		../../Source/osg3-2/include/osg/PolygonMode \
 		../../Source/osg3-2/include/osg/PositionAttitudeTransform \
 		../../Source/osg3-2/include/osg/AnimationPath \
-		../TestProject/Generator.h
+		../../Source/osg3-2/include/osgUtil/SmoothingVisitor \
+		../../Source/osg3-2/include/osgUtil/Export \
+		../TestProject/Generator.h \
+		../TestProject/leaf.h \
+		../TestProject/object.h \
+		../../Source/osg3-2/include/osg/Billboard
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o branch.o ../TestProject/branch.cpp
 
 leaf.o: ../TestProject/leaf.cpp ../TestProject/leaf.h \
@@ -1163,6 +1222,254 @@ leaf.o: ../TestProject/leaf.cpp ../TestProject/leaf.h \
 		../../Source/osg3-2/include/osg/AnimationPath \
 		../../Source/osg3-2/include/osg/Billboard
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o leaf.o ../TestProject/leaf.cpp
+
+terrainchunk.o: ../TestProject/terrainchunk.cpp ../TestProject/terrainchunk.h \
+		../TestProject/Generator.h \
+		../TestProject/ShaderObject.h \
+		../../Source/osg3-2/include/osg/Shader \
+		../../Source/osg3-2/include/osg/GL2Extensions \
+		../../Source/osg3-2/include/osg/Referenced \
+		../../Source/osg3-2/include/osg/Export \
+		../../Source/osg3-2/include/OpenThreads/ScopedLock \
+		../../Source/osg3-2/include/OpenThreads/Mutex \
+		../../Source/osg3-2/include/OpenThreads/Exports \
+		../../Source/osg3-2/include/OpenThreads/Atomic \
+		../../Source/osg3-2/include/osg/GL \
+		../../Source/osg3-2/include/osg/Object \
+		../../Source/osg3-2/include/osg/CopyOp \
+		../../Source/osg3-2/include/osg/ref_ptr \
+		../../Source/osg3-2/include/osg/Notify \
+		../../Source/osg3-2/include/osg/buffered_value \
+		../../Source/osg3-2/include/osg/DisplaySettings \
+		../../Source/osg3-2/include/osg/Matrixd \
+		../../Source/osg3-2/include/osg/Vec3d \
+		../../Source/osg3-2/include/osg/Vec2d \
+		../../Source/osg3-2/include/osg/Vec2f \
+		../../Source/osg3-2/include/osg/Math \
+		../../Source/osg3-2/include/osg/Vec3f \
+		../../Source/osg3-2/include/osg/Vec4d \
+		../../Source/osg3-2/include/osg/Vec4f \
+		../../Source/osg3-2/include/osg/Quat \
+		../../Source/osg3-2/include/osgDB/Archive \
+		../../Source/osg3-2/include/osgDB/ReaderWriter \
+		../../Source/osg3-2/include/osg/Image \
+		../../Source/osg3-2/include/osg/BufferObject \
+		../../Source/osg3-2/include/osg/FrameStamp \
+		../../Source/osg3-2/include/osg/Vec2 \
+		../../Source/osg3-2/include/osg/Vec3 \
+		../../Source/osg3-2/include/osg/Vec4 \
+		../../Source/osg3-2/include/osg/StateAttribute \
+		../../Source/osg3-2/include/osg/StateAttributeCallback \
+		../../Source/osg3-2/include/osg/Shape \
+		../../Source/osg3-2/include/osg/Plane \
+		../../Source/osg3-2/include/osg/Matrix \
+		../../Source/osg3-2/include/osg/Matrixf \
+		../../Source/osg3-2/include/osg/BoundingSphere \
+		../../Source/osg3-2/include/osg/BoundingBox \
+		../../Source/osg3-2/include/osg/Array \
+		../../Source/osg3-2/include/osg/MixinVector \
+		../../Source/osg3-2/include/osg/Vec2b \
+		../../Source/osg3-2/include/osg/Vec3b \
+		../../Source/osg3-2/include/osg/Vec4b \
+		../../Source/osg3-2/include/osg/Vec2s \
+		../../Source/osg3-2/include/osg/Vec3s \
+		../../Source/osg3-2/include/osg/Vec4s \
+		../../Source/osg3-2/include/osg/Vec2i \
+		../../Source/osg3-2/include/osg/Vec3i \
+		../../Source/osg3-2/include/osg/Vec4i \
+		../../Source/osg3-2/include/osg/Vec2ub \
+		../../Source/osg3-2/include/osg/Vec3ub \
+		../../Source/osg3-2/include/osg/Vec4ub \
+		../../Source/osg3-2/include/osg/Vec2us \
+		../../Source/osg3-2/include/osg/Vec3us \
+		../../Source/osg3-2/include/osg/Vec4us \
+		../../Source/osg3-2/include/osg/Vec2ui \
+		../../Source/osg3-2/include/osg/Vec3ui \
+		../../Source/osg3-2/include/osg/Vec4ui \
+		../../Source/osg3-2/include/osg/Node \
+		../../Source/osg3-2/include/osg/StateSet \
+		../../Source/osg3-2/include/osg/Uniform \
+		../../Source/osg3-2/include/osg/NodeCallback \
+		../../Source/osg3-2/include/osgDB/AuthenticationMap \
+		../../Source/osg3-2/include/osgDB/Export \
+		../../Source/osg3-2/include/osgDB/Registry \
+		../../Source/osg3-2/include/OpenThreads/ReentrantMutex \
+		../../Source/osg3-2/include/OpenThreads/Thread \
+		../../Source/osg3-2/include/osg/ArgumentParser \
+		../../Source/osg3-2/include/osg/ApplicationUsage \
+		../../Source/osg3-2/include/osg/KdTree \
+		../../Source/osg3-2/include/osg/Geometry \
+		../../Source/osg3-2/include/osg/Drawable \
+		../../Source/osg3-2/include/osg/PrimitiveSet \
+		../../Source/osg3-2/include/osg/RenderInfo \
+		../../Source/osg3-2/include/osg/State \
+		../../Source/osg3-2/include/osg/Observer \
+		../../Source/osg3-2/include/osg/Timer \
+		../../Source/osg3-2/include/osg/ShaderComposer \
+		../../Source/osg3-2/include/osg/Program \
+		../../Source/osg3-2/include/osg/Polytope \
+		../../Source/osg3-2/include/osg/fast_back_stack \
+		../../Source/osg3-2/include/osg/Viewport \
+		../../Source/osg3-2/include/osg/GLBeginEndAdapter \
+		../../Source/osg3-2/include/osg/ArrayDispatchers \
+		../../Source/osg3-2/include/osg/GraphicsCostEstimator \
+		../../Source/osg3-2/include/osg/View \
+		../../Source/osg3-2/include/osg/Camera \
+		../../Source/osg3-2/include/osg/Transform \
+		../../Source/osg3-2/include/osg/Group \
+		../../Source/osg3-2/include/osg/NodeVisitor \
+		../../Source/osg3-2/include/osg/ColorMask \
+		../../Source/osg3-2/include/osg/CullSettings \
+		../../Source/osg3-2/include/osg/ClearNode \
+		../../Source/osg3-2/include/osg/Texture \
+		../../Source/osg3-2/include/osg/GraphicsContext \
+		../../Source/osg3-2/include/osg/GraphicsThread \
+		../../Source/osg3-2/include/osg/OperationThread \
+		../../Source/osg3-2/include/osg/observer_ptr \
+		../../Source/osg3-2/include/OpenThreads/Barrier \
+		../../Source/osg3-2/include/OpenThreads/Condition \
+		../../Source/osg3-2/include/OpenThreads/Block \
+		../../Source/osg3-2/include/osg/Stats \
+		../../Source/osg3-2/include/osg/Light \
+		../../Source/osg3-2/include/osgDB/DynamicLibrary \
+		../../Source/osg3-2/include/osgDB/Options \
+		../../Source/osg3-2/include/osgDB/Callbacks \
+		../../Source/osg3-2/include/osgDB/FileCache \
+		../../Source/osg3-2/include/osgDB/DatabaseRevisions \
+		../../Source/osg3-2/include/osg/ObserverNodePath \
+		../../Source/osg3-2/include/osgDB/DotOsgWrapper \
+		../../Source/osg3-2/include/osgDB/Input \
+		../../Source/osg3-2/include/osgDB/Output \
+		../../Source/osg3-2/include/osgDB/fstream \
+		../../Source/osg3-2/include/osgDB/ObjectWrapper \
+		../../Source/osg3-2/include/osgDB/Serializer \
+		../../Source/osg3-2/include/osgDB/InputStream \
+		../../Source/osg3-2/include/osg/Endian \
+		../../Source/osg3-2/include/osgDB/StreamOperator \
+		../../Source/osg3-2/include/osgDB/DataTypes \
+		../../Source/osg3-2/include/osgDB/OutputStream \
+		../../Source/osg3-2/include/osgDB/SharedStateManager \
+		../../Source/osg3-2/include/osg/Geode \
+		../../Source/osg3-2/include/osgDB/ImageProcessor \
+		../../Source/osg3-2/include/osgDB/FileUtils \
+		../TestProject/tree.h \
+		../TestProject/object.h \
+		../../Source/osg3-2/include/osg/PositionAttitudeTransform \
+		../../Source/osg3-2/include/osg/AnimationPath \
+		../../Source/osg3-2/include/osg/Texture2D \
+		../../Source/osg3-2/include/osg/BlendFunc \
+		../../Source/osg3-2/include/osgDB/ReadFile \
+		../TestProject/branch.h \
+		../../Source/osg3-2/include/osg/PolygonMode \
+		../../Source/osg3-2/include/osgUtil/SmoothingVisitor \
+		../../Source/osg3-2/include/osgUtil/Export \
+		../TestProject/leaf.h \
+		../../Source/osg3-2/include/osg/Billboard \
+		../TestProject/lodobject.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o terrainchunk.o ../TestProject/terrainchunk.cpp
+
+lodobject.o: ../TestProject/lodobject.cpp ../TestProject/lodobject.h \
+		../TestProject/object.h \
+		../../Source/osg3-2/include/osg/Geometry \
+		../../Source/osg3-2/include/osg/Drawable \
+		../../Source/osg3-2/include/osg/BoundingBox \
+		../../Source/osg3-2/include/osg/Export \
+		../../Source/osg3-2/include/osg/Vec3 \
+		../../Source/osg3-2/include/osg/Vec3f \
+		../../Source/osg3-2/include/osg/Vec2f \
+		../../Source/osg3-2/include/osg/Math \
+		../../Source/osg3-2/include/osg/Vec3d \
+		../../Source/osg3-2/include/osg/Vec2d \
+		../../Source/osg3-2/include/osg/Shape \
+		../../Source/osg3-2/include/osg/Object \
+		../../Source/osg3-2/include/osg/Referenced \
+		../../Source/osg3-2/include/OpenThreads/ScopedLock \
+		../../Source/osg3-2/include/OpenThreads/Mutex \
+		../../Source/osg3-2/include/OpenThreads/Exports \
+		../../Source/osg3-2/include/OpenThreads/Atomic \
+		../../Source/osg3-2/include/osg/CopyOp \
+		../../Source/osg3-2/include/osg/ref_ptr \
+		../../Source/osg3-2/include/osg/Notify \
+		../../Source/osg3-2/include/osg/Quat \
+		../../Source/osg3-2/include/osg/Vec4f \
+		../../Source/osg3-2/include/osg/Vec4d \
+		../../Source/osg3-2/include/osg/Plane \
+		../../Source/osg3-2/include/osg/Vec4 \
+		../../Source/osg3-2/include/osg/Matrix \
+		../../Source/osg3-2/include/osg/Matrixd \
+		../../Source/osg3-2/include/osg/Matrixf \
+		../../Source/osg3-2/include/osg/BoundingSphere \
+		../../Source/osg3-2/include/osg/Array \
+		../../Source/osg3-2/include/osg/MixinVector \
+		../../Source/osg3-2/include/osg/Vec2b \
+		../../Source/osg3-2/include/osg/Vec3b \
+		../../Source/osg3-2/include/osg/Vec4b \
+		../../Source/osg3-2/include/osg/Vec2s \
+		../../Source/osg3-2/include/osg/Vec3s \
+		../../Source/osg3-2/include/osg/Vec4s \
+		../../Source/osg3-2/include/osg/Vec2i \
+		../../Source/osg3-2/include/osg/Vec3i \
+		../../Source/osg3-2/include/osg/Vec4i \
+		../../Source/osg3-2/include/osg/Vec2ub \
+		../../Source/osg3-2/include/osg/Vec3ub \
+		../../Source/osg3-2/include/osg/Vec4ub \
+		../../Source/osg3-2/include/osg/Vec2us \
+		../../Source/osg3-2/include/osg/Vec3us \
+		../../Source/osg3-2/include/osg/Vec4us \
+		../../Source/osg3-2/include/osg/Vec2ui \
+		../../Source/osg3-2/include/osg/Vec3ui \
+		../../Source/osg3-2/include/osg/Vec4ui \
+		../../Source/osg3-2/include/osg/Vec2 \
+		../../Source/osg3-2/include/osg/BufferObject \
+		../../Source/osg3-2/include/osg/GL \
+		../../Source/osg3-2/include/osg/buffered_value \
+		../../Source/osg3-2/include/osg/DisplaySettings \
+		../../Source/osg3-2/include/osg/FrameStamp \
+		../../Source/osg3-2/include/osg/PrimitiveSet \
+		../../Source/osg3-2/include/osg/GL2Extensions \
+		../../Source/osg3-2/include/osg/RenderInfo \
+		../../Source/osg3-2/include/osg/State \
+		../../Source/osg3-2/include/osg/StateSet \
+		../../Source/osg3-2/include/osg/StateAttribute \
+		../../Source/osg3-2/include/osg/StateAttributeCallback \
+		../../Source/osg3-2/include/osg/Shader \
+		../../Source/osg3-2/include/osg/Uniform \
+		../../Source/osg3-2/include/osg/Observer \
+		../../Source/osg3-2/include/osg/Timer \
+		../../Source/osg3-2/include/osg/ShaderComposer \
+		../../Source/osg3-2/include/osg/Program \
+		../../Source/osg3-2/include/osg/Polytope \
+		../../Source/osg3-2/include/osg/fast_back_stack \
+		../../Source/osg3-2/include/osg/Viewport \
+		../../Source/osg3-2/include/osg/GLBeginEndAdapter \
+		../../Source/osg3-2/include/osg/ArrayDispatchers \
+		../../Source/osg3-2/include/osg/GraphicsCostEstimator \
+		../../Source/osg3-2/include/osg/View \
+		../../Source/osg3-2/include/osg/Camera \
+		../../Source/osg3-2/include/osg/Transform \
+		../../Source/osg3-2/include/osg/Group \
+		../../Source/osg3-2/include/osg/Node \
+		../../Source/osg3-2/include/osg/NodeCallback \
+		../../Source/osg3-2/include/osg/NodeVisitor \
+		../../Source/osg3-2/include/osg/ColorMask \
+		../../Source/osg3-2/include/osg/CullSettings \
+		../../Source/osg3-2/include/osg/ClearNode \
+		../../Source/osg3-2/include/osg/Texture \
+		../../Source/osg3-2/include/osg/Image \
+		../../Source/osg3-2/include/osg/GraphicsContext \
+		../../Source/osg3-2/include/osg/GraphicsThread \
+		../../Source/osg3-2/include/osg/OperationThread \
+		../../Source/osg3-2/include/osg/observer_ptr \
+		../../Source/osg3-2/include/OpenThreads/Thread \
+		../../Source/osg3-2/include/OpenThreads/Barrier \
+		../../Source/osg3-2/include/OpenThreads/Condition \
+		../../Source/osg3-2/include/OpenThreads/Block \
+		../../Source/osg3-2/include/osg/Stats \
+		../../Source/osg3-2/include/osg/Light \
+		../../Source/osg3-2/include/osg/Geode \
+		../../Source/osg3-2/include/osg/PositionAttitudeTransform \
+		../../Source/osg3-2/include/osg/AnimationPath
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o lodobject.o ../TestProject/lodobject.cpp
 
 ####### Install
 

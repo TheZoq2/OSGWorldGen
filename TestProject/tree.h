@@ -14,13 +14,14 @@
 #include<osgDB/ReadFile>
 
 #include"branch.h"
+#include"lodobject.h"
 
 namespace TreeGen
 {
 	float tallFirBranchLength(float y); ///Get the lenght of a branch in a fir tree at height y. Where y is the height at y / height
 }
 
-class Tree: public Object
+class Tree: public LODObject
 {
 public:
 	Tree();
@@ -43,6 +44,8 @@ private:
 
 	Branch trunk;
 	std::vector< Branch > branches;
+
+	osg::Group* highLod;
 };
 
 #endif // TREE_H

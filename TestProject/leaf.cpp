@@ -1,11 +1,15 @@
 #include "leaf.h"
 
+int leafAmount = 0;
+
 Leaf::Leaf()
 {
 }
 
 void Leaf::create(float width, float height, float centerX, float centerZ)
 {
+	leafAmount++;
+
 	textureCoords = new osg::Vec2Array;
 	//Setup the base class
 	setupObject();

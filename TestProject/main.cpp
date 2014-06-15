@@ -14,28 +14,34 @@ osg::Group* getTriangle();
 
 int main()
 {
-	//Terrain terrain;
+	Terrain terrain;
 
-	//terrain.createAround(0, 0);
+	terrain.setScale(4);
+	terrain.createAround(0, 0);
 
-	//terrain.loadShader("../media/shaders/terrain.vert", "../media/shaders/terrain.frag");
+	terrain.loadShader("../media/shaders/terrain.vert", "../media/shaders/terrain.frag");
 	//TerrainChunk chunk;
 	//chunk.create(0, 0, 128, 128);
 	Tree tree;
-	tree.generateFir(24, 10, 1.25215, 30, 0.4);
+	tree.generateFir(24, 10, 1.25215, 10, 0.4);
 	tree.setLeafTexture("../media/img/Barr.png");
 
 	//Creating a root object
 	osg::Group* root = new osg::Group();
 
-	//root->addChild(terrain.getGroup());
+	root->addChild(terrain.getGroup());
 	root->addChild(tree.getRoot());
 	root->addChild(getTriangle());
+
+	terrain.updateAround(0, 0, 0);
 
 	osgViewer::Viewer viewer;
 
 	viewer.setSceneData( root );
 	viewer.run();
+
+	std::cout << "LeafAmount: " << leafAmount << std::endl;
+	std::cout << "BranchAmount: " << branchAmount << std::endl;
 
 	return 0;
 }

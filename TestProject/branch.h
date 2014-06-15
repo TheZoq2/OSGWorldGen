@@ -17,6 +17,8 @@
 #include "Generator.h"
 #include "leaf.h"
 
+extern int branchAmount;
+
 class Branch
 {
 public:
